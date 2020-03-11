@@ -10,6 +10,7 @@ A design will be drafted once the goals and features have been outlined.
 
 - Cross platform and easy deployment by combining docker and .NET Core.
 - Automatic posting of your media collection to Usenet servers
+- Periodic check to see if your media has been removed or if it is incomplete, and then re-post the media
 - TVDB integration to post with a specific media tags
 - Supports obfuscation of posts
 - NZBIndexer integration to report any uploads made
