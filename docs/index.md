@@ -17,6 +17,7 @@ A design will be drafted once the goals and features have been outlined.
 - PAR Support and Rar support
 - Schedule posting of media any time of the day.
 - Integration with Handbrake to convert media to specific formats before posting
+- Task scheduler to perform timed actions
 - Post subtitle files with the media.
 
 ## The Goal
@@ -40,6 +41,21 @@ It is of the utmost importance that users remain anonymous and secure while usin
 - All connections will be done with SSL over HTTPS
 - All files posted are striped of any identifying meta data.
 
+## Posting process
+
+The following is done for every single media file, either a movie or a tv-show.
+
+1. Select media file
+2. Check naming and if it is valid and understood
+3. Send search request to check if it already exists
+4. If it exits, is it still complete?
+5. If step 3 or 4 is no, then continue
+6. Remove meta-data from media file
+7. Add media file to a compressed and split zip file
+8. Verify zip file integrity
+9. Create Par2 file
+
+
 ## Design
 
 COMING SOON - An Adobe XD wire-frame
@@ -61,3 +77,6 @@ The application will be developed based on the following frameworks:
 - SqlLite
 - NLog
   
+### Libraries
+
+- [Usenet Poster Library](https://github.com/keimpema/usenet)
