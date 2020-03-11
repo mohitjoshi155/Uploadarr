@@ -1,37 +1,38 @@
-## Welcome to GitHub Pages
+## Welcome to Uploadarr
 
-You can use the [editor on GitHub](https://github.com/Uploadarr/Uploadarr/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+> A usenet posting tool, similar to [Sonarr](https://link](https://github.com/Sonarr/Sonarr)) and [Radarr](https://github.com/Radarr/Radarr) but instead for posting media to usenet with a clear GUI. Media will be re-posted if removed or when falling outside the retention date.   
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Features
 
-### Markdown
+ - Automatic posting of media to usenet servers.
+ - TVDB integration to post with a specific meta tags
+ - Integration with Handbrake to convert media to specific formats before posting. 
+ - Post subtitle files with the media.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+### The Goal
 
-# Header 1
-## Header 2
-### Header 3
+Create an easy to use application to index the media collection of the user, check if it is already available on Usenet and if not, then post the various media to the usenet servers. This will be an A to Z posting solution, where next to no technical knowledge should be needed. 
 
-- Bulleted
-- List
+### Why?
 
-1. Numbered
-2. List
+Currently posting to Usenet is a cumbersome process that can be largely automated. Think how Sonarr and Radarr revolutionized the scene with the automatic media management features. This is what can be accomplished on the usenet posting side of things with an easy to use GUI
 
-**Bold** and _Italic_ and `Code` text
+### Problems that are solved
 
-[Link](url) and ![Image](src)
-```
+ - Provide 1 clear format for naming and posting
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
+### Tech
+The application will be developed based on the following technologies: 
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Uploadarr/Uploadarr/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+#### Front-end
+ - Vue.js with SPA Nuxt.js
+ - SignalR
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+#### Back-end
+ - .Net Core Web API
+ - Docker
+ - SignalR
+ - SqlLite
+ - NLog
