@@ -1,6 +1,6 @@
 
-src/Uploadarr/.vs/
+src/Uploadarr.API/.vs/
 
-src/Uploadarr/bin/
+src/Uploadarr.API/bin/
 
-src/Uploadarr/obj/
+src/Uploadarr.API/obj/
