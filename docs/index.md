@@ -1,6 +1,6 @@
 # Welcome to Uploadarr
 
-> A full GUI Usenet posting tool, similar to [Sonarr](https://link](https://github.com/Sonarr/Sonarr)) and [Radarr](https://github.com/Radarr/Radarr) but for posting media.
+> A full GUI Usenet posting tool, similar to [Sonarr](https://github.com/Sonarr/Sonarr) and [Radarr](https://github.com/Radarr/Radarr) but for posting media.
 
 This document is still a work in progress, feedback is greatly appreciated!
 
@@ -54,7 +54,6 @@ The following is done for every single media file, either a movie or a tv-show.
 7. Add media file to a compressed and split zip file
 8. Verify zip file integrity
 9. Create Par2 file
-
 
 ## Design
 
