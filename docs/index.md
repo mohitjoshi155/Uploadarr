@@ -19,6 +19,7 @@ A design will be drafted once the goals and features have been outlined.
 - Integration with Handbrake to convert media to specific formats before posting
 - Task scheduler to perform timed actions
 - Post subtitle files with the media.
+- Integrated VPN
 
 ## The Goal
 
