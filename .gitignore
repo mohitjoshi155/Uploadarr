@@ -4,3 +4,5 @@ src/Uploadarr.API/.vs/
 src/Uploadarr.API/bin/
 
 src/Uploadarr.API/obj/
+
+node_modules/

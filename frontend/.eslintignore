@@ -1,0 +1,6 @@
+.nuxt/
+build/
+dist/
+node_modules/
+static/
+.vscode/vscode-chrome-debug-userdatadir/

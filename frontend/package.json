@@ -1,47 +1,84 @@
 {
-  "name": "uploadarr_ui",
-  "version": "1.0.0",
-  "description": "My divine Nuxt.js project",
-  "author": "Uploadarr",
-  "private": true,
-  "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "test": "jest"
-  },
-  "lint-staged": {
-    "*.{js,vue}": "npm run lint",
-    "*.{css,vue}": "stylelint"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/axios": "^5.3.6"
-  },
-  "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
-    "@nuxtjs/eslint-config": "^2.0.0",
-    "@nuxtjs/eslint-module": "^1.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.1.0",
-    "eslint-plugin-nuxt": ">=0.4.2",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1",
-    "husky": "^4.0.0",
-    "lint-staged": "^10.0.0",
-    "@nuxtjs/stylelint-module": "^3.1.0",
-    "stylelint": "^10.1.0",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
-    "jest": "^24.1.0",
-    "vue-jest": "^4.0.0-0"
-  }
+	"name": "uploadarr_ui",
+	"version": "1.0.0",
+	"description": "My divine Nuxt.js project",
+	"author": "Uploadarr",
+	"private": true,
+	"scripts": {
+		"dev": "nuxt-ts",
+		"build": "nuxt-ts build",
+		"start": "nuxt-ts start",
+		"generate": "nuxt generate",
+		"lint-fix": "eslint . --ext .ts,.js,.vue --max-warnings=0 --fix & prettier-stylelint --ignore-path ./.eslintignore --write \"{,!(node_modules)/**/}*.{css,scss}\" --fix & prettier --ignore-path ./.eslintignore --write \"{,!(node_modules)/**/}*.{ts,vue,json,js,jsx}\"",
+		"lint": "eslint . --ext .ts,.js,.vue --max-warnings=0",
+		"fix-styles": "prettier-stylelint --ignore-path ./.eslintignore --write \"{,!(node_modules)/**/}*.{css,scss}\" --fix",
+		"prettier": "prettier --ignore-path ./.eslintignore --write \"{,!(node_modules)/**/}*.{ts,vue,json,js,jsx}\"",
+		"test": "jest"
+	},
+	"lint-staged": {
+		"*.{js,vue}": "npm run lint",
+		"*.{css,vue}": "stylelint"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"dependencies": {
+		"@mdi/font": "^5.0.45",
+		"@nuxt/types": "^0.6.1",
+		"@nuxt/typescript": "^2.8.1",
+		"@nuxt/typescript-runtime": "^0.3.10",
+		"@nuxtjs/axios": "^5.3.6",
+		"@nuxtjs/style-resources": "^1.0.0",
+		"@types/jest": "^25.1.4",
+		"@types/node": "^13.7.6",
+		"classnames": "^2.2.6",
+		"consola": "^2.11.3",
+		"core-js": "^3.6.4",
+		"filesize": "^6.1.0",
+		"material-design-icons-iconfont": "^5.0.1",
+		"moment-timezone": "^0.5.27",
+		"nuxt": "^2.0.0",
+		"nuxt-i18n": "^6.6.0",
+		"nuxt-property-decorator": "^2.5.0"
+	},
+	"devDependencies": {
+		"@babel/plugin-syntax-nullish-coalescing-operator": "^7.8.3",
+		"@nuxt/typescript-build": "^0.6.0",
+		"@nuxtjs/eslint-config": "^2.0.0",
+		"@nuxtjs/eslint-config-typescript": "^1.0.0",
+		"@nuxtjs/eslint-module": "^1.0.0",
+		"@nuxtjs/stylelint-module": "^3.1.0",
+		"@nuxtjs/vuetify": "^1.0.0",
+		"@types/classnames": "^2.2.9",
+		"@types/moment-timezone": "^0.5.12",
+		"@types/webpack-env": "^1.15.1",
+		"@typescript-eslint/eslint-plugin": "^2.17.0",
+		"@typescript-eslint/parser": "^2.21.0",
+		"@vue/babel-preset-app": "^4.2.3",
+		"@vue/test-utils": "^1.0.0-beta.27",
+		"babel-eslint": "^10.0.1",
+		"babel-jest": "^24.1.0",
+		"babel-plugin-transform-imports": "^2.0.0",
+		"eslint": "^6.1.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-plugin-nuxt": ">=0.4.2",
+		"eslint-plugin-prettier": "^3.1.2",
+		"husky": "^4.0.0",
+		"jest": "^24.1.0",
+		"lint-staged": "^10.0.0",
+		"prettier": "^1.19.1",
+		"prettier-eslint": "^9.0.1",
+		"prettier-stylelint": "^0.4.2",
+		"sass-loader": "^8.0.2",
+		"stylelint": "^13.0.0",
+		"stylelint-config-prettier": "^8.0.1",
+		"stylelint-prettier": "^1.1.2",
+		"typescript": "^3.7.5",
+		"vue-class-component": "^7.2.2",
+		"vue-jest": "^4.0.0-0",
+		"vue-property-decorator": "^8.3.0",
+		"vuex-module-decorators": "^0.11.0"
+	}
 }
