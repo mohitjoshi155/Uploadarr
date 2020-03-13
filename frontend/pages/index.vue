@@ -52,14 +52,12 @@
 	</v-layout>
 </template>
 
-<script>
-import Logo from '../components/Logo.vue';
-import VuetifyLogo from '../components/VuetifyLogo.vue';
+<script lang="ts">
+import Vue from 'vue';
+import Component from 'vue-class-component';
 
-export default {
-	components: {
-		Logo,
-		VuetifyLogo,
-	},
-};
+@Component
+export default class Home extends Vue {
+	roll: boolean = false;
+}
 </script>

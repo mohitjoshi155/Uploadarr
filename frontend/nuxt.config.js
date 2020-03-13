@@ -91,6 +91,13 @@ export default {
 		/*
 		 ** You can extend webpack config here
 		 */
-		// ext end(config, ctx) {}
+		// Will allow for debugging in Typescript + Nuxt
+		// Doc: https://nordschool.com/enable-vs-code-debugger-for-nuxt-and-typescript/
+		// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+		extend(config, { isDev, isClient }) {
+			if (isDev) {
+				config.devtool = isClient ? 'source-map' : 'inline-source-map';
+			}
+		},
 	},
 };

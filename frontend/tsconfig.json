@@ -3,19 +3,17 @@
 		"target": "esnext",
 		"module": "esnext",
 		"moduleResolution": "node",
-		"lib": ["esnext", "esnext.asynciterable", "dom"],
 		"esModuleInterop": true,
 		"allowJs": true,
 		"sourceMap": true,
 		"strict": true,
 		"noEmit": true,
 		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"importHelpers": true,
+		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
-		"paths": {
-			"~/*": ["./*"],
-			"@/*": ["./*"],
-			"@components/*": ["./components/*"]
-		},
+		"outDir": "./build/",
 		"types": [
 			// The order is very important here, don't sort!
 			"@nuxt/types",
@@ -23,7 +21,14 @@
 			"@nuxtjs/vuetify",
 			"@types/node",
 			"vue"
-		]
+		],
+		"paths": {
+			"~/*": ["./*"],
+			"@/*": ["./*"],
+			"@components/*": ["./components/*"]
+		},
+		"lib": ["esnext", "esnext.asynciterable", "dom"],
 	},
-	"exclude": ["node_modules"]
+	"include": ["./**/*"],
+	"exclude": ["node_modules", "dist", "./nuxt.config.js"]
 }
