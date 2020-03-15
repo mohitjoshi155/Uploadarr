@@ -2,7 +2,14 @@
 	<v-app dark>
 		<v-content>
 			<v-container>
-				<nuxt />
+				<v-row>
+					<v-col cols="2">
+						<the-menu />
+					</v-col>
+					<v-col>
+						<nuxt />
+					</v-col>
+				</v-row>
 			</v-container>
 		</v-content>
 		<v-footer app>
@@ -13,8 +20,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import TheMenu from '../components/TheMenu/TheMenu.vue';
 
-@Component
+@Component({
+	components: { TheMenu },
+})
 export default class Default extends Vue {
 	get currentYear(): number {
 		return new Date().getFullYear();
