@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Uploadarr.csproj", ""]
-RUN dotnet restore "./Uploadarr.csproj"
+COPY ["Uploadarr.API/Uploadarr.API.csproj", "Uploadarr.API/"]
+RUN dotnet restore "Uploadarr.API/Uploadarr.API.csproj"
 COPY . .
-WORKDIR "/src/."
-RUN dotnet build "Uploadarr.csproj" -c Release -o /app/build
+WORKDIR "/src/Uploadarr.API"
+RUN dotnet build "Uploadarr.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Uploadarr.csproj" -c Release -o /app/publish
+RUN dotnet publish "Uploadarr.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Uploadarr.dll"]
+ENTRYPOINT ["dotnet", "Uploadarr.API.dll"]

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Uploadarr.Controllers
+namespace Uploadarr.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

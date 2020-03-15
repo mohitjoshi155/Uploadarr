@@ -1,6 +1,6 @@
 using System;
 
-namespace Uploadarr
+namespace Uploadarr.API
 {
     public class WeatherForecast
     {
