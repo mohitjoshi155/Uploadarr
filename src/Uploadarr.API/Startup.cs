@@ -10,13 +10,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore;
 
 namespace Uploadarr.API
 {
     public class Startup
     {
+        private Container container = new Container();
+
         public Startup(IConfiguration configuration)
         {
+            container.Options.ResolveUnregisteredConcreteTypes = false;
+
             Configuration = configuration;
         }
 
@@ -26,33 +32,49 @@ namespace Uploadarr.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddLogging();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            // Sets up the basic configuration that for integrating Simple Injector with
+            // ASP.NET Core by setting the DefaultScopedLifestyle, and setting up auto
+            // cross wiring.
+            services.AddSimpleInjector(container, options =>
+            {
+                // AddAspNetCore() wraps web requests in a Simple Injector scope and
+                // allows request-scoped framework services to be resolved.
+                options.AddAspNetCore();
+
+                // Optionally, allow application components to depend on the non-generic
+                // ILogger (Microsoft.Extensions.Logging) or IStringLocalizer
+                // (Microsoft.Extensions.Localization) abstractions.
+                options.AddLogging();
+                options.AddLocalization();
+            });
+
+            InitializeContainer();
+        }
+
+        private void InitializeContainer()
+        {
+            // Add application services. For instance:
+            // container.Register<IUserService, UserService>(Lifestyle.Singleton);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSimpleInjectorAspNetRequestScoping(container);
+            // UseSimpleInjector() finalizes the integration process.
+            app.UseSimpleInjector(container);
 
-            container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
-
-            InitializeContainer(app);
-
-            container.Register<CustomMiddleware>();
-
-            container.Verify();
-
-            // Add custom middleware
-            app.Use(async (context, next) => {
-                await container.GetInstance<CustomMiddleware>().Invoke(context, next);
-            });
-
-            // ASP.NET default stuff here
-            app.UseMvc(routes =>
+            if (env.IsDevelopment())
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
             if (env.IsDevelopment())
             {
@@ -69,6 +91,9 @@ namespace Uploadarr.API
             {
                 endpoints.MapControllers();
             });
+
+            // Always verify the container
+            container.Verify();
         }
     }
 }
