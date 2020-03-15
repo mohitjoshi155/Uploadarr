@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import TheMenu from '../components/TheMenu/TheMenu.vue';
+import TheMenu from '@/components/TheMenu/TheMenu.vue';
 
 @Component({
 	components: { TheMenu },

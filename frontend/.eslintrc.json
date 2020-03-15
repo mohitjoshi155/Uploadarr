@@ -41,6 +41,13 @@
 		"vue",
 		"prettier"
 	],
+	"settings": {
+		"import/resolver": {
+			// This fixes an unresolved import error when importing @nuxt/types
+			// https://github.com/benmosher/eslint-plugin-import/issues/1485
+			"typescript": {} // this loads <rootdir>/tsconfig.json to eslint
+		}
+	},
 	"rules": {
 		"prettier/prettier": "error",
 		/* * * * * * * * * * * * * * * * * * * * * * * * * * * *
