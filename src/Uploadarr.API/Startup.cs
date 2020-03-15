@@ -31,6 +31,29 @@ namespace Uploadarr.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSimpleInjectorAspNetRequestScoping(container);
+
+            container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
+
+            InitializeContainer(app);
+
+            container.Register<CustomMiddleware>();
+
+            container.Verify();
+
+            // Add custom middleware
+            app.Use(async (context, next) => {
+                await container.GetInstance<CustomMiddleware>().Invoke(context, next);
+            });
+
+            // ASP.NET default stuff here
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

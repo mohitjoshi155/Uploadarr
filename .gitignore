@@ -9,4 +9,12 @@ src/Uploadarr.Common/bin/
 
 src/Uploadarr.Common/obj/
 
-node_modules/
+frontend/node_modules/
+
+src/Uploadarr.Core/bin/
+
+src/Uploadarr.Core/obj/
+
+src/Uploadarr.Data/bin/
+
+src/Uploadarr.Data/obj/
