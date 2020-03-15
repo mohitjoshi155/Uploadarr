@@ -1,8 +1,12 @@
 
-src/Uploadarr.API/.vs/
+src/.vs/
 
 src/Uploadarr.API/bin/
 
 src/Uploadarr.API/obj/
+
+src/Uploadarr.Common/bin/
+
+src/Uploadarr.Common/obj/
 
 node_modules/

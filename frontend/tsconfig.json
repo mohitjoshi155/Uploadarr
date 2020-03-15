@@ -1,44 +1,34 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "noEmit": true,
-    "baseUrl": ".",
-    "outDir": "./build/",
-    "types": [
-      // The order is very important here, don't sort!
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxtjs/vuetify",
-      "@types/node",
-      "@types/jest",
-      "@types/classnames",
-      "nuxt-i18n",
-      "vue",
-      "@types/webpack-env"
-    ],
-    "paths": {
-      "@/*": ["./*"],
-      "~/*": ["./*"]
-    },
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
-  },
-  "include": ["./**/*"],
-  "exclude": ["node_modules", "dist"]
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"allowJs": true,
+		"sourceMap": true,
+		"strict": true,
+		"noEmit": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"importHelpers": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"outDir": "./build/",
+		"types": [
+			// The order is very important here, don't sort!
+			"@nuxt/types",
+			"@nuxtjs/axios",
+			"@nuxtjs/vuetify",
+			"@types/node",
+			"vue"
+		],
+		"paths": {
+			"~/*": ["./*"],
+			"@/*": ["./*"],
+			"@components/*": ["./components/*"]
+		},
+		"lib": ["esnext", "esnext.asynciterable", "dom"],
+	},
+	"include": ["./**/*"],
+	"exclude": ["node_modules", "dist", "./nuxt.config.js"]
 }
