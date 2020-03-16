@@ -7,11 +7,14 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
-    <PackageReference Include="SimpleInjector" Version="4.9.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Uploadarr.Common\Uploadarr.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

@@ -1,32 +1,31 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+using Carter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Nancy.Owin;
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore;
+using Uploadarr.Common;
 using Uploadarr.Data;
 
 namespace Uploadarr.API
 {
     public class Startup
     {
-        private Container _container = new Container();
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
-            _container.Options.ResolveUnregisteredConcreteTypes = false;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
 
-            Configuration = configuration;
+            _hostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -41,24 +40,9 @@ namespace Uploadarr.API
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
 
-            // Sets up the basic configuration that for integrating Simple Injector with
-            // ASP.NET Core by setting the DefaultScopedLifestyle, and setting up auto
-            // cross wiring.
-            services.AddSimpleInjector(_container, options =>
-            {
-                // AddAspNetCore() wraps web requests in a Simple Injector scope and
-                // allows request-scoped framework services to be resolved.
-                options.AddAspNetCore();
-
-                // Optionally, allow application components to depend on the non-generic
-                // ILogger (Microsoft.Extensions.Logging) or IStringLocalizer
-                // (Microsoft.Extensions.Localization) abstractions.
-                options.AddLogging();
-                options.AddLocalization();
-            });
             services.AddCarter();
 
-            IoC.RegisterContainers(ref _container);
+            IoC.RegisterContainers(services, _hostingEnvironment);
         }
 
 
@@ -66,9 +50,6 @@ namespace Uploadarr.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // UseSimpleInjector() finalizes the integration process.
-            app.UseSimpleInjector(_container);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,18 +59,13 @@ namespace Uploadarr.API
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseOwin(x => x.UseNancy());
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseEndpoints(builder => builder.MapCarter());
 
         }
     }
