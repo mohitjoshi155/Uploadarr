@@ -1,11 +1,19 @@
-using Carter;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Nancy.Owin;
 using SimpleInjector;
+using SimpleInjector.Integration.AspNetCore;
 using Uploadarr.Data;
 
 namespace Uploadarr.API
@@ -48,7 +56,7 @@ namespace Uploadarr.API
                 options.AddLogging();
                 options.AddLocalization();
             });
-            services.AddCarter();
+
             InitializeContainer();
         }
 
@@ -68,15 +76,22 @@ namespace Uploadarr.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
-
+            app.UseOwin(x => x.UseNancy());
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(builder => builder.MapCarter());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             // Always verify the container
             _container.Verify();
