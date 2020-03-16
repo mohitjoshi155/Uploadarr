@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Nancy.Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore;
 using Uploadarr.Data;
@@ -80,11 +81,7 @@ namespace Uploadarr.API
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseOwin(x => x.UseNancy());
             app.UseHttpsRedirection();
 
             app.UseRouting();
