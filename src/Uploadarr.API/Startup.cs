@@ -6,22 +6,24 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore;
+using Uploadarr.Data;
 
 namespace Uploadarr.API
 {
     public class Startup
     {
-        private Container container = new Container();
+        private readonly Container _container = new Container();
 
         public Startup(IConfiguration configuration)
         {
-            container.Options.ResolveUnregisteredConcreteTypes = false;
+            _container.Options.ResolveUnregisteredConcreteTypes = false;
 
             Configuration = configuration;
         }
@@ -36,10 +38,12 @@ namespace Uploadarr.API
             services.AddLogging();
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]));
+
             // Sets up the basic configuration that for integrating Simple Injector with
             // ASP.NET Core by setting the DefaultScopedLifestyle, and setting up auto
             // cross wiring.
-            services.AddSimpleInjector(container, options =>
+            services.AddSimpleInjector(_container, options =>
             {
                 // AddAspNetCore() wraps web requests in a Simple Injector scope and
                 // allows request-scoped framework services to be resolved.
@@ -65,7 +69,7 @@ namespace Uploadarr.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // UseSimpleInjector() finalizes the integration process.
-            app.UseSimpleInjector(container);
+            app.UseSimpleInjector(_container);
 
             if (env.IsDevelopment())
             {
@@ -93,7 +97,7 @@ namespace Uploadarr.API
             });
 
             // Always verify the container
-            container.Verify();
+            _container.Verify();
         }
     }
 }
