@@ -6,11 +6,11 @@ namespace Uploadarr.API
 {
     public class FileSystemModule : ApiBaseModule
     {
-        private readonly IFileSystem _fileSystem;
+        private readonly IDiskProvider _diskProvider;
 
-        public FileSystemModule(IFileSystem fileSystem) : base("/filesystem")
+        public FileSystemModule( IDiskProvider diskProvider) : base("/filesystem")
         {
-            _fileSystem = fileSystem;
+            _diskProvider = diskProvider;
             Get("/", GetContents);
             Get("/type", GetEntityType);
         }
@@ -28,8 +28,8 @@ namespace Uploadarr.API
             {
                 allowFoldersWithoutTrailingSlashes = bool.Parse(req.Query["allowFoldersWithoutTrailingSlashes"]);
             }
-            ;
-            return res.WriteAsync(_fileSystem.GetDirectories("").ToJson());
+            
+            return res.WriteAsync(_diskProvider.GetDirectories("").ToJson());
         }
 
         private Task GetEntityType(HttpRequest req, HttpResponse res)

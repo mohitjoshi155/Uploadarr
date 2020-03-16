@@ -18,3 +18,7 @@ src/Uploadarr.Core/obj/
 src/Uploadarr.Data/bin/
 
 src/Uploadarr.Data/obj/
+
+src/Uploadarr.Logger/bin/
+
+src/Uploadarr.Logger/obj/

@@ -16,7 +16,7 @@ namespace Uploadarr.API
 
             // Dependency Injection
             services.AddSingleton<IFileProvider>(compositeProvider);
-            services.AddSingleton<IFileSystem, FileSystem>();
+            services.AddSingleton<IDiskProvider, DiskProvider>();
         }
     }
 }
