@@ -8,7 +8,7 @@ namespace Uploadarr.Data
 {
     public sealed class DatabaseContext : DbContext
     {
-        private readonly string connectionString = "Data Source=./UploadarrDB.db";
+        // private readonly string connectionString = "Data Source=./UploadarrDB.db";
 
         public DbSet<DirectoryPath> DirectoryPath { get; set; }
         public DbSet<DirectoryPathType> DirectoryPathType { get; set; }
