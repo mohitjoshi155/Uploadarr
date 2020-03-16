@@ -20,7 +20,7 @@ namespace Uploadarr.API
 {
     public class Startup
     {
-        private readonly Container _container = new Container();
+        private Container _container = new Container();
 
         public Startup(IConfiguration configuration)
         {
@@ -56,15 +56,12 @@ namespace Uploadarr.API
                 options.AddLogging();
                 options.AddLocalization();
             });
+            services.AddCarter();
 
-            InitializeContainer();
+            IoC.RegisterContainers(ref _container);
         }
 
-        private void InitializeContainer()
-        {
-            // Add application services. For instance:
-            // container.Register<IUserService, UserService>(Lifestyle.Singleton);
-        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -93,8 +90,7 @@ namespace Uploadarr.API
                 endpoints.MapControllers();
             });
 
-            // Always verify the container
-            _container.Verify();
+
         }
     }
 }
