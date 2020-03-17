@@ -1,8 +1,9 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using System.Reflection;
 using Uploadarr.Common;
+using ServiceProvider = Uploadarr.Common.ServiceProvider;
 
 namespace Uploadarr.API
 {
@@ -17,6 +18,10 @@ namespace Uploadarr.API
             // Dependency Injection
             services.AddSingleton<IFileProvider>(compositeProvider);
             services.AddSingleton<IDiskProvider, DiskProvider>();
+            services.AddSingleton<IServiceProvider, ServiceProvider>();
+            services.AddSingleton<IFileSystemLookupService, FileSystemLookupService>();
+            services.AddSingleton<IRuntimeInfo, RuntimeInfo>();
+            services.AddSingleton<IProcessProvider, ProcessProvider>();
         }
     }
 }

@@ -149,7 +149,11 @@ namespace Uploadarr.Common
 
         public string[] GetDirectories(string path)
         {
-            // Ensure.String.IsValidPath(path);
+            if (path.IsNullOrWhiteSpace())
+            {
+                return Directory.GetLogicalDrives();
+            }
+            Ensure.String.IsValidPath(path);
 
             return Directory.GetDirectories(path);
         }

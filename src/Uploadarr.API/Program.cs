@@ -1,9 +1,9 @@
-using System;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Web;
+using System;
 
 namespace Uploadarr.API
 {
@@ -12,7 +12,7 @@ namespace Uploadarr.API
 
         public static void Main(string[] args)
         {
-            var Log = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            var Log = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
                 Log.Debug("init main");
@@ -20,7 +20,6 @@ namespace Uploadarr.API
             }
             catch (Exception exception)
             {
-                //NLog: catch setup errors
                 Log.Error(exception, "Stopped program because of exception");
                 throw;
             }
@@ -40,9 +39,8 @@ namespace Uploadarr.API
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureLogging(logging =>
                 {
-                    logging.ClearProviders();
                     logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
                 })
-                .UseNLog(); 
+                .UseNLog(NLogAspNetCoreOptions.Default);
     }
 }

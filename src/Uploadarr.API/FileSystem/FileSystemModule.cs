@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 using Uploadarr.Common;
 
 namespace Uploadarr.API
@@ -7,30 +7,28 @@ namespace Uploadarr.API
     public class FileSystemModule : ApiBaseModule
     {
         private readonly IDiskProvider _diskProvider;
+        private readonly IFileSystemLookupService _fileSystemLookupService;
 
-        public FileSystemModule( IDiskProvider diskProvider) : base("/filesystem")
+        public FileSystemModule(IFileSystemLookupService fileSystemLookupService, IDiskProvider diskProvider) : base("/filesystem")
         {
             _diskProvider = diskProvider;
+            _fileSystemLookupService = fileSystemLookupService;
+
             Get("/", GetContents);
             Get("/type", GetEntityType);
         }
 
         private Task GetContents(HttpRequest req, HttpResponse res)
         {
-            var pathQuery = req.Path;
-            bool includeFiles = false;
-            if (req.Query.ContainsKey("includeFiles"))
-            {
-                includeFiles = bool.Parse(req.Query["includeFiles"]);
-            }
-            bool allowFoldersWithoutTrailingSlashes = false;
-            if (req.Query.ContainsKey("allowFoldersWithoutTrailingSlashes"))
-            {
-                allowFoldersWithoutTrailingSlashes = bool.Parse(req.Query["allowFoldersWithoutTrailingSlashes"]);
-            }
-            
-            return res.WriteAsync(_diskProvider.GetDirectories("").ToJson());
+            string path = GetQueryValue<string>(req, "path");
+            bool includeFiles = GetQueryValue<bool>(req, "includeFiles");
+            bool allowFoldersWithoutTrailingSlashes = GetQueryValue<bool>(req, "allowFoldersWithoutTrailingSlashes");
+            var result =
+                _fileSystemLookupService.LookupContents(path, includeFiles, allowFoldersWithoutTrailingSlashes);
+            return res.WriteAsync(result.ToJson());
         }
+
+
 
         private Task GetEntityType(HttpRequest req, HttpResponse res)
         {
