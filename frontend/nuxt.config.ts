@@ -1,6 +1,6 @@
-import colors from 'vuetify/es5/util/colors';
+import { Configuration } from '@nuxt/types/';
 
-export default {
+const config: Configuration = {
 	mode: 'spa',
 	/*
 	 ** Headers of the page
@@ -32,6 +32,7 @@ export default {
 	 */
 	plugins: [
 		{ src: '@plugins/vuetify.ts', mode: 'client' },
+		{ src: '@plugins/axiosPlugin.ts', mode: 'client' },
 	],
 	/*
 	 ** Nuxt.js dev-modules
@@ -60,11 +61,7 @@ export default {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 	],
-	/*
-	 ** Axios module configuration
-	 ** See https://axios.nuxtjs.org/options
-	 */
-	axios: {},
+
 	/*
 	 ** Build configuration
 	 */
@@ -82,3 +79,5 @@ export default {
 		},
 	},
 };
+
+export default config;

@@ -68,7 +68,13 @@ export default class TheMenu extends Vue {
 				icon: 'directions_run',
 				title: 'Settings',
 				path: '/settings',
-				items: [],
+				items: [
+					{
+						title: 'Paths',
+						path: '/settings/paths',
+						items: [],
+					},
+				],
 			},
 		];
 	}

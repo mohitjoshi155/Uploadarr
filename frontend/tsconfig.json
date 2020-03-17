@@ -30,5 +30,5 @@
 		"lib": ["esnext", "esnext.asynciterable", "dom"],
 	},
 	"include": ["./**/*"],
-	"exclude": ["node_modules", "dist", "./nuxt.config.js"]
+	"exclude": ["node_modules", "dist"]
 }
