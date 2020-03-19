@@ -34,7 +34,7 @@ namespace Uploadarr.API
             services.AddDbContext<MainDatabaseContext>();
 
             // Validators
-            services.AddTransient<IValidator<RootFolder>, RootFolderValidator>();
+            services.AddTransient<IValidator<RootFolderDTO>, RootFolderValidator>();
 
             services.AddAutoMapper(typeof(MappingProfile));
         }

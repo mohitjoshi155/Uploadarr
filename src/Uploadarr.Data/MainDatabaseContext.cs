@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using Uploadarr.Common;
 
 
 namespace Uploadarr.Data
@@ -12,6 +11,7 @@ namespace Uploadarr.Data
         public DbSet<DirectoryPath> DirectoryPath { get; set; }
         public DbSet<DirectoryPathType> DirectoryPathType { get; set; }
         public DbSet<RootFolder> RootFolders { get; set; }
+        public DbSet<RootFolderType> RootFolderTypes { get; set; }
         public DbSet<UnmappedFolder> UnmappedFolders { get; set; }
 
         public MainDatabaseContext()
@@ -29,6 +29,19 @@ namespace Uploadarr.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RootFolderType>().HasData(
+                new RootFolderType
+                {
+                    Id = 1,
+                    Name = "Movies"
+                },
+                new RootFolderType
+                {
+                    Id = 2,
+                    Name = "Series"
+                }
+            );
 
             // import all separate entity config files
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

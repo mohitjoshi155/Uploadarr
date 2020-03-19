@@ -32,49 +32,60 @@ namespace Uploadarr.API
             return res.Negotiate(result);
         }
 
-        private Task CreateRootFolder(HttpRequest req, HttpResponse res)
+        private async Task CreateRootFolder(HttpRequest req, HttpResponse res)
         {
-            var result = req.BindAndValidate<RootFolderValidator>().Result;
+            var result = await req.BindAndValidate<RootFolderDTO>();
 
             if (!result.ValidationResult.IsValid)
             {
                 res.StatusCode = StatusCodes.Status422UnprocessableEntity;
-                return res.Negotiate(result.ValidationResult.GetFormattedErrors());
+                await res.AsJson(result.ValidationResult.GetFormattedErrors());
+                return;
             }
 
             res.StatusCode = StatusCodes.Status201Created;
 
-            RootFolder model = _mapper.Map<RootFolder>(result.Data);
+            RootFolder model = _rootFolderService.Add(_mapper.Map<RootFolder>(result.Data));
 
-            int id = _rootFolderService.Add(model).Id;
-
-            // TODO Give a sensible response back
-            return res.WriteAsync(id.ToString());
+            await res.Negotiate(model);
 
         }
-        private Task GetRootFolders(HttpContext ctx)
+        private async Task GetRootFolders(HttpRequest req, HttpResponse res)
         {
-            var list = _mapper.Map<List<RootFolderDTO>>(_rootFolderService.AllWithUnmappedFolders());
+            int typeId = GetQueryValue<int>(req, "typeId");
 
-            ctx.Response.StatusCode = list.Count > 0 ? StatusCodes.Status200OK : StatusCodes.Status204NoContent;
+            var list = _mapper.Map<List<RootFolderDTO>>(_rootFolderService.All((RootFolderTypeEnum)typeId));
 
-            return ctx.Response.Negotiate(list);
+
+            if (list.Count == 0)
+            {
+                res.StatusCode = StatusCodes.Status204NoContent;
+                // await res.Negotiate(list);
+                return;
+            }
+            else
+            {
+                res.StatusCode = StatusCodes.Status200OK;
+                await res.AsJson(list);
+                return;
+            }
+
         }
 
-        private Task DeleteRootFolder(HttpContext ctx)
+        private async Task DeleteRootFolder(HttpContext ctx)
         {
             int id = ctx.Request.RouteValues.As<int>("id");
             if (id == 0)
             {
                 ctx.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-                return ctx.Response.WriteAsync($"Invalid Id: {id}");
+                await ctx.Response.WriteAsync($"Invalid Id: {id}");
             }
 
             _rootFolderService.Remove(id);
             ctx.Response.StatusCode = StatusCodes.Status200OK;
 
-            return ctx.Response.WriteAsync($"Removed RootFolder with Id: {id}");
+            await ctx.Response.WriteAsync($"Removed RootFolder with Id: {id}");
         }
     }
 }

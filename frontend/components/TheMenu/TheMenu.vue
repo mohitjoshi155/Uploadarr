@@ -1,5 +1,5 @@
 <template>
-	<v-card max-width="500" class="mx-auto">
+	<v-card max-width="400" class="mx-auto">
 		<v-list>
 			<template v-for="item in getLinks">
 				<template v-if="item.items.length > 0">

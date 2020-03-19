@@ -144,6 +144,7 @@ namespace Uploadarr.Common
 
             try
             {
+                // TODO Improve this with .NET Core DirectorySecurity
                 var testPath = Path.Combine(path, "sonarr_write_test.txt");
                 var testContent = $"This file was created to verify if '{path}' is writable. It should've been automatically deleted. Feel free to delete it.";
                 File.WriteAllText(testPath, testContent);

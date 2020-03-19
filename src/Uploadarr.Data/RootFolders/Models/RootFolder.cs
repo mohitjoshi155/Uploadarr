@@ -6,6 +6,9 @@ namespace Uploadarr.Data
     {
         public string Path { get; set; }
 
+        public virtual RootFolderType Type { get; set; }
+        public int TypeId { get; set; }
+
         public bool Accessible { get; set; }
         public long? FreeSpace { get; set; }
         public long? TotalSpace { get; set; }

@@ -1,7 +1,7 @@
 <template>
 	<v-app dark>
 		<v-content>
-			<v-container>
+			<v-container fluid class="p-0">
 				<v-row>
 					<v-col cols="2">
 						<the-menu />

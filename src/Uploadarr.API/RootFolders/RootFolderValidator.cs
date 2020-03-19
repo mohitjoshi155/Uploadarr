@@ -3,11 +3,11 @@ using Uploadarr.Data;
 
 namespace Uploadarr.API
 {
-    public class RootFolderValidator : AbstractValidator<RootFolder>
+    public class RootFolderValidator : AbstractValidator<RootFolderDTO>
     {
         public RootFolderValidator()
         {
-            RuleFor(x => x.Id).NotNull();
+            RuleFor(x => x.Path).NotEmpty();
         }
     }
 }

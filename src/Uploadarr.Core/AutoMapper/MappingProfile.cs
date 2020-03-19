@@ -8,6 +8,9 @@ namespace Uploadarr.Core
         public MappingProfile()
         {
             CreateMap<RootFolder, RootFolderDTO>().ReverseMap();
+            CreateMap<RootFolderType, RootFolderTypeDTO>()
+                .ForSourceMember(x => x.ToEnum, opt => opt.DoNotValidate())
+                .ReverseMap();
         }
     }
 }

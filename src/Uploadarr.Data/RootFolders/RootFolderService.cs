@@ -11,12 +11,12 @@ namespace Uploadarr.Data
 {
     public interface IRootFolderService
     {
-        List<RootFolder> All();
+        List<RootFolder> All(RootFolderTypeEnum type);
         List<RootFolder> AllWithUnmappedFolders();
         RootFolder Add(RootFolder rootDir);
         void Remove(int id);
         RootFolder Get(int id);
-        string GetBestRootFolderPath(string path);
+        string GetBestRootFolderPath(string path, RootFolderTypeEnum type);
     }
 
     public class RootFolderService : IRootFolderService
@@ -46,12 +46,15 @@ namespace Uploadarr.Data
             _dbContext = dbContext;
         }
 
-        public List<RootFolder> All()
+        public List<RootFolder> All(RootFolderTypeEnum type = RootFolderTypeEnum.None)
         {
+            var rootFolders = _dbContext
+                .RootFolders
+                .Include(o => o.Type)
+                .AsNoTracking()
+                .ToList();
 
-            var rootFolders = _dbContext.RootFolders.AsNoTracking().ToList();
-
-            return rootFolders;
+            return type == RootFolderTypeEnum.None ? rootFolders : rootFolders.Where(x => x.Type.Id == (int)type).ToList();
         }
 
         public List<RootFolder> AllWithUnmappedFolders()
@@ -80,7 +83,7 @@ namespace Uploadarr.Data
 
         public RootFolder Add(RootFolder rootFolder)
         {
-            var all = All();
+            var all = All(rootFolder.Type.ToEnum);
 
             if (string.IsNullOrWhiteSpace(rootFolder.Path) || !Path.IsPathRooted(rootFolder.Path))
             {
@@ -103,6 +106,7 @@ namespace Uploadarr.Data
             }
 
             _dbContext.RootFolders.Add(rootFolder);
+            _dbContext.Entry(rootFolder.Type).State = EntityState.Unchanged;
             _dbContext.SaveChanges();
 
             GetDetails(rootFolder);
@@ -160,9 +164,9 @@ namespace Uploadarr.Data
             return rootFolder;
         }
 
-        public string GetBestRootFolderPath(string path)
+        public string GetBestRootFolderPath(string path, RootFolderTypeEnum type)
         {
-            var possibleRootFolder = All().Where(r => r.Path.IsParentPath(path))
+            var possibleRootFolder = All(type).Where(r => r.Path.IsParentPath(path))
                                           .OrderByDescending(r => r.Path.Length)
                                           .FirstOrDefault();
 
