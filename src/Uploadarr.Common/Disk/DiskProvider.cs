@@ -1,11 +1,9 @@
+﻿using EnsureThat;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using EnsureThat;
-using NLog;
 
 namespace Uploadarr.Common
 {
@@ -39,6 +37,18 @@ namespace Uploadarr.Common
             }
 
             return mount.AvailableFreeSpace;
+        }
+
+        public long? GetTotalSize(string path)
+        {
+            Ensure.String.IsValidPath(path);
+
+            var root = GetPathRoot(path);
+
+            if (!FolderExists(root))
+                throw new DirectoryNotFoundException(root);
+
+            return DriveTotalSizeEx(root);
         }
 
         public DateTime FolderGetCreationTime(string path)
@@ -194,7 +204,7 @@ namespace Uploadarr.Common
         public void DeleteFile(string path)
         {
             Ensure.String.IsValidPath(path);
-           // Logger.Trace("Deleting file: {0}", path);
+            // Logger.Trace("Deleting file: {0}", path);
 
             RemoveReadOnly(path);
 
@@ -237,6 +247,29 @@ namespace Uploadarr.Common
             RemoveReadOnly(source);
             MoveFileInternal(source, destination);
         }
+
+        private static long DriveTotalSizeEx(string folderName)
+        {
+            Ensure.String.IsValidPath(folderName);
+
+            if (!folderName.EndsWith("\\"))
+            {
+                folderName += '\\';
+            }
+
+            //ulong total = 0;
+            //ulong dummy1 = 0;
+            //ulong dummy2 = 0;
+
+            // TODO Update method of retrieving disk space
+            //if (GetDiskFreeSpaceEx(folderName, out dummy1, out total, out dummy2))
+            //{
+            //    return (long)total;
+            //}
+
+            return 0;
+        }
+
 
         public void MoveFolder(string source, string destination)
         {

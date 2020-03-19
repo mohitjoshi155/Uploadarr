@@ -6,16 +6,14 @@
 
   <ItemGroup>
     <PackageReference Include="Ensure.That" Version="8.2.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog" Version="4.6.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Uploadarr.Common\Uploadarr.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <ProjectReference Include="..\Uploadarr.Data\Uploadarr.Data.csproj" />
   </ItemGroup>
 
 </Project>

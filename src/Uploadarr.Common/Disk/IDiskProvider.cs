@@ -1,18 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
 
 namespace Uploadarr.Common
 {
     public interface IDiskProvider
     {
         long? GetAvailableSpace(string path);
-       // void InheritFolderPermissions(string filename);
-       // void SetPermissions(string path, string mask, string user, string group);
-       // void CopyPermissions(string sourcePath, string targetPath, bool includeOwner = false);
-       // long? GetTotalSize(string path);
+        // void InheritFolderPermissions(string filename);
+        // void SetPermissions(string path, string mask, string user, string group);
+        // void CopyPermissions(string sourcePath, string targetPath, bool includeOwner = false);
+        long? GetTotalSize(string path);
         DateTime FolderGetCreationTime(string path);
         DateTime FolderGetLastWrite(string path);
         DateTime FileGetLastWrite(string path);
@@ -30,7 +28,7 @@ namespace Uploadarr.Common
         void CopyFile(string source, string destination, bool overwrite = false);
         void MoveFile(string source, string destination, bool overwrite = false);
         void MoveFolder(string source, string destination);
-       // bool TryCreateHardLink(string source, string destination);
+        // bool TryCreateHardLink(string source, string destination);
         void DeleteFolder(string path, bool recursive);
         string ReadAllText(string filePath);
         void WriteAllText(string filename, string contents);

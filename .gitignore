@@ -22,3 +22,9 @@ src/Uploadarr.Data/obj/
 src/Uploadarr.Logger/bin/
 
 src/Uploadarr.Logger/obj/
+
+*.db-wal
+
+*.db-shm
+
+*.db

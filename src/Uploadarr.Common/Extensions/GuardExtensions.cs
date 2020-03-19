@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using EnsureThat;
+﻿using EnsureThat;
 using EnsureThat.Enforcers;
+using System;
+using System.IO;
 
 namespace Uploadarr.Common
 {
@@ -15,7 +15,7 @@ namespace Uploadarr.Common
             {
                 return;
             }
-            
+
             // Check if path is valid length
             try
             {

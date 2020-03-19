@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using FluentValidation;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using System.Reflection;
 using Uploadarr.Common;
+using Uploadarr.Core;
+using Uploadarr.Data;
 using ServiceProvider = Uploadarr.Common.ServiceProvider;
 
 namespace Uploadarr.API
@@ -22,6 +26,18 @@ namespace Uploadarr.API
             services.AddSingleton<IFileSystemLookupService, FileSystemLookupService>();
             services.AddSingleton<IRuntimeInfo, RuntimeInfo>();
             services.AddSingleton<IProcessProvider, ProcessProvider>();
+
+            // Services
+            services.AddScoped<IRootFolderService, RootFolderService>();
+
+            // Database context
+            services.AddDbContext<MainDatabaseContext>();
+
+            // Validators
+            services.AddTransient<IValidator<RootFolder>, RootFolderValidator>();
+
+            services.AddAutoMapper(typeof(MappingProfile));
         }
+
     }
 }

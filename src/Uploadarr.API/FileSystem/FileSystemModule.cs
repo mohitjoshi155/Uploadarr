@@ -26,6 +26,7 @@ namespace Uploadarr.API
             var result =
                 _fileSystemLookupService.LookupContents(path, includeFiles, allowFoldersWithoutTrailingSlashes);
             return res.WriteAsync(result.ToJson());
+
         }
 
 

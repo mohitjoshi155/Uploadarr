@@ -12,9 +12,9 @@ namespace Uploadarr.API.Controllers
     [ApiController]
     public class DirectoryPathsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly MainDatabaseContext _context;
 
-        public DirectoryPathsController(DatabaseContext context)
+        public DirectoryPathsController(MainDatabaseContext context)
         {
             _context = context;
         }
