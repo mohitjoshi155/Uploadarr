@@ -71,8 +71,8 @@ namespace Uploadarr.API
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseCors(MyAllowSpecificOrigins);
-
-            app.UseHttpsRedirection();
+            // TODO Might need to be re-enabled if https can be natively supported
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

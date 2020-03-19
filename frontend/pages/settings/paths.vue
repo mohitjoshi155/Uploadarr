@@ -7,7 +7,7 @@
 					<hr />
 				</v-col>
 			</v-row>
-			<folder-table :items="moviePaths" />
+			<folder-table :items="moviePaths" @delete-path="deletePath($event, pathTypes[0])" />
 			<directory-browser @new-path="addPath($event, pathTypes[0])" />
 			<v-row>
 				<v-col>
@@ -15,7 +15,7 @@
 					<hr />
 				</v-col>
 			</v-row>
-			<folder-table :items="seriePaths" />
+			<folder-table :items="seriePaths" @delete-path="deletePath($event, pathTypes[1])" />
 			<directory-browser @new-path="addPath($event, pathTypes[1])" />
 		</v-col>
 	</v-row>
@@ -69,7 +69,7 @@ export default class SettingsPaths extends Vue {
 				break;
 		}
 
-		tempPaths.push({ path, type });
+		tempPaths.push({ id: 0, path, type });
 
 		this.$axios
 			.post('/rootfolder/', {
@@ -80,6 +80,12 @@ export default class SettingsPaths extends Vue {
 				this.setPath(tempPaths, type);
 				this.requestPaths(response.data.type);
 			});
+	}
+
+	deletePath(path: IPath, type: IPathType): void {
+		this.$axios.delete(`/rootfolder/${path.id}`).then(() => {
+			this.requestPaths(type);
+		});
 	}
 
 	requestPaths(type: IPathType): void {
